@@ -1,24 +1,30 @@
-import logo from './logo.svg';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
+import {Home} from './components/Home'
 import './App.css';
+import { ProductList } from './components/ProductList';
+import { ProductDetail } from './components/ProductDetail';
+import { Contact } from './components/Contact';
+import { Header } from './components/Header';
+import { Admin } from './components/Admin';
+import { NotFound } from './components/NotFound';
 
 function App() {
+  const isAdmin = false;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <div className="App">
+        <Header/>
+        <Routes>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/product" element={<ProductList />}></Route>
+          <Route path="/product/:id" element={<ProductDetail />}></Route>
+          <Route path="/contact" element={<Contact />}></Route>
+          <Route path="/admin" element={isAdmin?<Admin />:<Navigate to="/" />}></Route>
+          <Route path="*" element={<NotFound />}></Route>
+        </Routes>
+      </div>
+      <footer>FOOTER</footer>
+    </BrowserRouter>
   );
 }
 
